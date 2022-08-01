@@ -1,36 +1,43 @@
 package com.luv2code.hibernate.demo.entity;
 
-
-
-
 import javax.persistence.*;
 
 @Entity
-@Table(name="student")
-public class Student {
+@Table(name = "instructor")
+public class Instructor {
 
+
+    //fields annotated to db table
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name= "first_name")
+    @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name= "email")
+    @Column(name = "email")
     private String email;
-    public Student(){
 
+//connection between instructor detail (mapping)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="instructor_detail_id")
+    private InstructorDetail instructorDetail;
+
+    //constructors
+
+    public Instructor() {
     }
 
-    public Student(String firstName, String lastName, String email) {
+    public Instructor(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
+//getters and setters
 
     public int getId() {
         return id;
@@ -64,13 +71,28 @@ public class Student {
         this.email = email;
     }
 
+    public InstructorDetail getInstructorDetail() {
+        return instructorDetail;
+    }
+
+    public void setInstructorDetail(InstructorDetail instructorDetail) {
+        this.instructorDetail = instructorDetail;
+    }
+//tostring
+
     @Override
     public String toString() {
-        return "Student{" +
+        return "Instructor{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
+
+
+
+
+
+
 }
